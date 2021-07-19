@@ -102,52 +102,18 @@ METHOD(key_exchange_t, set_public_key, bool,
 
 	/* check public value:
 	 * 1. 0 or 1 is invalid as 0^a = 0 and 1^a = 1
-	 * 2. a public value larger or equal the modulus is invalid */
-	if (mpz_cmp_ui(this->yb, 1) > 0 &&
-		mpz_cmp(this->yb, p_min_1) < 0)
+	 * 2. a public value larger or equal the modulus is invalid
+	 * 3. see get_shared_secret()... */
+	if (mpz_cmp_ui(this->yb, 1) <= 0 ||
+		mpz_cmp(this->yb, p_min_1) >= 0)
 	{
-#ifdef EXTENDED_DH_TEST
-		/* 3. test if y ^ q mod p = 1, where q = (p - 1)/2. */
-		mpz_t q, one;
-		diffie_hellman_params_t *params;
-
-		mpz_init(q);
-		mpz_init(one);
-
-		params = diffie_hellman_get_params(this->group);
-		if (!params->subgroup.len)
-		{
-			mpz_fdiv_q_2exp(q, p_min_1, 1);
-		}
-		else
-		{
-			mpz_import(q, params->subgroup.len, 1, 1, 1, 0, params->subgroup.ptr);
-		}
-		mpz_powm(one, this->yb, q, this->p);
-		mpz_clear(q);
-		if (mpz_cmp_ui(one, 1) == 0)
-		{
-			mpz_powm(this->zz, this->yb, this->xa, this->p);
-			this->computed = TRUE;
-		}
-		else
-		{
-			DBG1(DBG_LIB, "public DH value verification failed:"
-				 " y ^ q mod p != 1");
-		}
-		mpz_clear(one);
-#else
-		mpz_powm(this->zz, this->yb, this->xa, this->p);
-		this->computed = TRUE;
-#endif
-	}
-	else
-	{
-		DBG1(DBG_LIB, "public DH value verification failed:"
-			 " y < 2 || y > p - 1 ");
+		DBG1(DBG_LIB, "public DH value verification failed: "
+			 "y < 2 || y > p - 1 ");
+		mpz_clear(p_min_1);
+		return FALSE;
 	}
 	mpz_clear(p_min_1);
-	return this->computed;
+	return TRUE;
 }
 
 METHOD(key_exchange_t, get_public_key, bool,
@@ -176,7 +142,39 @@ METHOD(key_exchange_t, get_shared_secret, bool,
 {
 	if (!this->computed)
 	{
-		return FALSE;
+#ifdef EXTENDED_DH_TEST
+		/* 3. test if y ^ q mod p = 1, where q = (p - 1)/2. */
+		mpz_t q, one, p_min_1;
+		diffie_hellman_params_t *params;
+
+		mpz_init(q);
+		mpz_init(one);
+
+		params = diffie_hellman_get_params(this->group);
+		if (!params->subgroup.len)
+		{
+			mpz_init(p_min_1);
+			mpz_sub_ui(p_min_1, this->p, 1);
+			mpz_fdiv_q_2exp(q, p_min_1, 1);
+			mpz_clear(p_min_1);
+		}
+		else
+		{
+			mpz_import(q, params->subgroup.len, 1, 1, 1, 0, params->subgroup.ptr);
+		}
+		mpz_powm(one, this->yb, q, this->p);
+		mpz_clear(q);
+		if (mpz_cmp_ui(one, 1) != 0)
+		{
+			DBG1(DBG_LIB, "public DH value verification failed: "
+				 "y ^ q mod p != 1");
+			mpz_clear(one);
+			return FALSE;
+		}
+		mpz_clear(one);
+#endif
+		mpz_powm(this->zz, this->yb, this->xa, this->p);
+		this->computed = TRUE;
 	}
 	secret->len = this->p_len;
 	secret->ptr = mpz_export(NULL, NULL, 1, secret->len, 1, 0, this->zz);
