@@ -330,7 +330,7 @@ CALLBACK(key_filter, bool,
 		{
 			chunk_t fp;
 			key->get_fingerprint(key, KEYID_PUBKEY_SHA1, &fp);
-			DBG1(DBG_CFG, "key candidate fp:  %B", fp);
+			DBG1(DBG_CFG, "key candidate fp:  %B", &fp);
 			if (data->id == NULL ||
 				key->has_fingerprint(key, data->id->get_encoding(data->id)))
 			{
