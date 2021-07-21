@@ -1125,11 +1125,14 @@ static private_key_t *get_private_by_cert(private_credential_manager_t *this,
 	chunk_t chunk;
 	public_key_t *public;
 
+	DBG1(DBG_CFG, "get_private_by_cert \"%Y\"", cert->get_subject(cert));
 	public = cert->get_public_key(cert);
 	if (public)
 	{
+		DBG1(DBG_CFG, "found public key for cert");
 		if (public->get_fingerprint(public, KEYID_PUBKEY_SHA1, &chunk))
 		{
+			DBG1(DBG_CFG, "key fp: %Y", chunk);
 			keyid = identification_create_from_encoding(ID_KEY_ID, chunk);
 			private = get_private_by_keyid(this, type, keyid);
 			keyid->destroy(keyid);

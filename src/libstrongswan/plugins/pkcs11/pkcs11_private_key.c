@@ -896,7 +896,7 @@ pkcs11_private_key_t *pkcs11_private_key_connect(key_type_t type, va_list args)
 	if (this->pubkey) {
 		DBG1(DBG_CFG, "found public via pkcs11");
 	} else {
-		DBG1(DBG_CFG, "no found via pkcs11");
+		DBG1(DBG_CFG, "not found via pkcs11");
 	}
 	if (!this->pubkey)
 	{
