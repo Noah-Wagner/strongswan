@@ -893,9 +893,17 @@ pkcs11_private_key_t *pkcs11_private_key_connect(key_type_t type, va_list args)
 	}
 
 	this->pubkey = pkcs11_public_key_connect(this->lib, slot, this->type, keyid);
+	if (this->pubkey) {
+		DBG1(DBG_CFG, "found public via pkcs11");
+	} else {
+		DBG1(DBG_CFG, "no found via pkcs11");
+	}
 	if (!this->pubkey)
 	{
 		this->pubkey = find_pubkey_in_certs(this, keyid);
+		if (this->pubkey) {
+			DBG1(DBG_CFG, "found public in certs");
+		}
 		if (!this->pubkey)
 		{
 			DBG1(DBG_CFG, "no public key or certificate found for private key "
