@@ -407,6 +407,7 @@ static bool fingerprint_ecdsa(private_pkcs11_public_key_t *this,
 		default:
 			return FALSE;
 	}
+	DBG1(DBG_CFG, "pkcs11 key %B", asn1);
 	hasher = lib->crypto->create_hasher(lib->crypto, HASH_SHA1);
 	if (!hasher || !hasher->allocate_hash(hasher, asn1, fp))
 	{

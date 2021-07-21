@@ -223,6 +223,7 @@ bool openssl_ec_fingerprint(EC_KEY *ec, cred_encoding_type_t type, chunk_t *fp)
 		default:
 			return FALSE;
 	}
+	DBG1(DBG_CFG, "openssl ec key fp %B", &key);
 	hasher = lib->crypto->create_hasher(lib->crypto, HASH_SHA1);
 	if (!hasher || !hasher->allocate_hash(hasher, key, fp))
 	{
