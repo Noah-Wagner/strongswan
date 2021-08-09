@@ -630,7 +630,9 @@ METHOD(socket_t, sender, status_t,
 
 	if (len != data.len)
 	{
-		DBG1(DBG_NET, "error writing to socket: %s", strerror(errno));
+		DBG1(DBG_NET, "error writing to socket 2: %s", strerror(errno));
+		DBG1(DBG_NET, "[AHOFF DEBUG]: skt: %d", skt->port);
+		DBG1(DBG_NET, "[AHOFF DEBUG]: family: %d", family);
 		return FAILED;
 	}
 	return SUCCESS;

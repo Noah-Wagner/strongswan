@@ -620,7 +620,10 @@ METHOD(socket_t, sender, status_t,
 
 	if (bytes_sent != data.len)
 	{
-		DBG1(DBG_NET, "error writing to socket: %s", strerror(errno));
+		DBG1(DBG_NET, "error writing to socket 1: %s", strerror(errno));
+		DBG1(DBG_NET, "[AHOFF DEBUG]: sky: %d", skt);
+		DBG1(DBG_NET, "[AHOFF DEBUG]: sport: %d", sport);
+		DBG1(DBG_NET, "[AHOFF DEBUG]: family: %d", family);
 		return FAILED;
 	}
 	return SUCCESS;
@@ -809,6 +812,7 @@ static void open_socketpair(private_socket_default_socket_t *this, int family,
 		return;
 	}
 
+	DBG1(DBG_NET, "[AHOFF DEBUG] Opening Socket: %d", this->port);
 	*skt = open_socket(this, family, &this->port);
 	if (*skt == -1)
 	{
@@ -817,6 +821,7 @@ static void open_socketpair(private_socket_default_socket_t *this, int family,
 	}
 	else
 	{
+		DBG1(DBG_NET, "[AHOFF DEBUG] Opening NAT-T Socket: %d", this->natt);
 		*skt_natt = open_socket(this, family, &this->natt);
 		if (*skt_natt == -1)
 		{
@@ -830,10 +835,12 @@ METHOD(socket_t, destroy, void,
 {
 	if (this->ipv4 != -1)
 	{
+		DBG1(DBG_NET, "[AHOFF DEBUG] CLOSING SOCKET");
 		close(this->ipv4);
 	}
 	if (this->ipv4_natt != -1)
 	{
+		DBG1(DBG_NET, "[AHOFF DEBUG] CLOSING NATT SOCKET");
 		close(this->ipv4_natt);
 	}
 	if (this->ipv6 != -1)
