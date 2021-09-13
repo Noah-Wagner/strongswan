@@ -333,7 +333,7 @@ static status_t sign_signature_auth(private_pubkey_authenticator_t *this,
 							   &auth_data) ||
 				!build_signature_auth_data(&auth_data, params))
 			{
-				DBG2(DBG_IKE, "unable to create %N signature for %N key",
+				DBG1(DBG_IKE, "unable to create %N signature for %N key",
 					 signature_scheme_names, params->scheme, key_type_names,
 					 private->get_type(private));
 				continue;
