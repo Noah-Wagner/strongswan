@@ -982,6 +982,10 @@ METHOD(enumerator_t, public_enumerate, bool,
 	while (this->inner->enumerate(this->inner, &cert, auth))
 	{
 		DESTROY_IF(this->current);
+
+		chunk_t cert_encoding = cert->get_subject(cert)->get_encoding(cert->get_subject(cert));
+		DBG1(DBG_CFG, "Iterating, cert subject: %B", &cert_encoding);
+
 		this->current = cert->get_public_key(cert);
 		if (this->current)
 		{
