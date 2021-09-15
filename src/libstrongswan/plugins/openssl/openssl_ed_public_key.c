@@ -166,10 +166,6 @@ bool openssl_ed_fingerprint(EVP_PKEY *key, cred_encoding_type_t type,
 		default:
 			return FALSE;
 	}
-
-	DBG1(DBG_CFG, "openssl ed key fp %B", &blob);
-
-
 	hasher = lib->crypto->create_hasher(lib->crypto, HASH_SHA1);
 	if (!hasher || !hasher->allocate_hash(hasher, blob, fp))
 	{
@@ -185,7 +181,6 @@ bool openssl_ed_fingerprint(EVP_PKEY *key, cred_encoding_type_t type,
 METHOD(public_key_t, get_fingerprint, bool,
 	private_public_key_t *this, cred_encoding_type_t type, chunk_t *fingerprint)
 {
-	
 	return openssl_ed_fingerprint(this->key, type, fingerprint);
 }
 

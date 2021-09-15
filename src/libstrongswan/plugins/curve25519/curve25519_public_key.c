@@ -356,7 +356,6 @@ bool curve25519_public_key_fingerprint(chunk_t pubkey,
 			return FALSE;
 	}
 
-	DBG1(DBG_CFG, "curve25519 fp: %B", &key);
 	hasher = lib->crypto->create_hasher(lib->crypto, HASH_SHA1);
 	if (!hasher || !hasher->allocate_hash(hasher, key, fp))
 	{
