@@ -909,6 +909,7 @@ METHOD(enumerator_t, trusted_enumerate, bool,
 		if (verify_trust_chain(this->this, current, this->auth, FALSE,
 							   this->online))
 		{
+			DBG1(DBG_CFG, "  verified");
 			*cert = current;
 			if (auth)
 			{
@@ -916,6 +917,7 @@ METHOD(enumerator_t, trusted_enumerate, bool,
 			}
 			return TRUE;
 		}
+		DBG1(DBG_CFG, "  verification failed");
 		this->failed->insert_last(this->failed, current->get_ref(current));
 	}
 	return FALSE;

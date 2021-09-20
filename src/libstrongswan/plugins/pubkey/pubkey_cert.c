@@ -247,6 +247,7 @@ static pubkey_cert_t *pubkey_cert_create(public_key_t *key,
 	}
 	else if (key->get_fingerprint(key, KEYID_PUBKEY_INFO_SHA1, &fingerprint))
 	{
+		DBG1(DBG_CFG, " get fingerprint");
 		this->subject = identification_create_from_encoding(ID_KEY_ID, fingerprint);
 	}
 	else

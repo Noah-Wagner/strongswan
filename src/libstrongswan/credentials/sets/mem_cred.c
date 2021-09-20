@@ -187,6 +187,9 @@ static certificate_t *add_cert_internal(private_mem_cred_t *this, bool trusted,
 		this->untrusted->insert_first(this->untrusted, cert->get_ref(cert));
 	}
 	this->lock->unlock(this->lock);
+
+	DBG1(DBG_CFG, "added certificate '%Y'", cert->get_subject(cert));
+
 	return cert;
 }
 

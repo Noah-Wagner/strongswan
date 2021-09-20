@@ -92,7 +92,7 @@ static void process_certreq(private_ike_cert_pre_t *this,
 		}
 		else
 		{
-			DBG2(DBG_IKE, "received cert request for unknown ca with keyid %Y",
+			DBG1(DBG_IKE, "received cert request for unknown ca with keyid %Y",
 				 id);
 			unknown++;
 		}
@@ -241,6 +241,8 @@ static void process_x509(cert_payload_t *payload, auth_cfg_t *auth,
 			DBG1(DBG_IKE, "received hash-and-url for issuer cert \"%s\"", url);
 			auth->add(auth, AUTH_HELPER_IM_HASH_URL, url);
 		}
+	} else {
+		DBG1(DBG_IKE, "unable to parse cert");
 	}
 }
 
@@ -422,6 +424,7 @@ static void build_certreqs(private_ike_cert_pre_t *this, message_t *message)
 	ike_cfg = this->ike_sa->get_ike_cfg(this->ike_sa);
 	if (!ike_cfg->send_certreq(ike_cfg))
 	{
+		DBG1(DBG_CFG, "Don't send certreq");
 		return;
 	}
 
