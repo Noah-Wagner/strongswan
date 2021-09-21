@@ -380,6 +380,7 @@ static bool rdrand_mixed(private_rdrand_rng_t *this, chunk_t chunk)
 METHOD(rng_t, get_bytes, bool,
 	private_rdrand_rng_t *this, size_t bytes, uint8_t *buffer)
 {
+	DBG1(DBG_CFG, "rng get_bytes");
 	switch (this->quality)
 	{
 		case RNG_WEAK:
@@ -395,6 +396,7 @@ METHOD(rng_t, get_bytes, bool,
 METHOD(rng_t, allocate_bytes, bool,
 	private_rdrand_rng_t *this, size_t bytes, chunk_t *chunk)
 {
+	DBG1(DBG_CFG, "rng allocate_bytes");
 	*chunk = chunk_alloc(bytes);
 	if (get_bytes(this, bytes, chunk->ptr))
 	{

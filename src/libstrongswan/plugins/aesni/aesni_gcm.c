@@ -1245,6 +1245,7 @@ METHOD(aead_t, encrypt, bool,
 	private_aesni_gcm_t *this, chunk_t plain, chunk_t assoc, chunk_t iv,
 	chunk_t *encr)
 {
+	DBG1(DBG_CFG, "aesni gcm encrypt");
 	u_char *out;
 
 	if (!this->key || iv.len != IV_SIZE)
@@ -1266,6 +1267,7 @@ METHOD(aead_t, decrypt, bool,
 	private_aesni_gcm_t *this, chunk_t encr, chunk_t assoc, chunk_t iv,
 	chunk_t *plain)
 {
+	DBG1(DBG_CFG, "aesni gsm decrypt");
 	u_char *out, icv[this->icv_size];
 
 	if (!this->key || iv.len != IV_SIZE || encr.len < this->icv_size)

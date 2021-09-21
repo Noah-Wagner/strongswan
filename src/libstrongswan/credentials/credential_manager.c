@@ -1031,6 +1031,7 @@ METHOD(credential_manager_t, create_public_enumerator, enumerator_t*,
 	);
 	if (auth)
 	{
+		DBG1(DBG_CFG, "added auth to public enumeration");
 		enumerator->wrapper = auth_cfg_wrapper_create(auth);
 		add_local_set(this, &enumerator->wrapper->set, FALSE);
 	}

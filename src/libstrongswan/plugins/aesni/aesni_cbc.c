@@ -370,6 +370,7 @@ static void decrypt_cbc192(aesni_key_t *key, u_int blocks, u_char *in,
 static void encrypt_cbc256(aesni_key_t *key, u_int blocks, u_char *in,
 						   u_char *iv, u_char *out)
 {
+	DBG1(DBG_CFG, "encrypt_cbc256");
 	__m128i *ks, t, fb, *bi, *bo;
 	int i;
 
@@ -409,6 +410,7 @@ static void encrypt_cbc256(aesni_key_t *key, u_int blocks, u_char *in,
 static void decrypt_cbc256(aesni_key_t *key, u_int blocks, u_char *in,
 						   u_char *iv, u_char *out)
 {
+	DBG1(DBG_CFG, "decrypt_cbc256");
 	__m128i *ks, last, *bi, *bo;
 	__m128i t1, t2, t3, t4;
 	__m128i f1, f2, f3, f4;
@@ -560,12 +562,14 @@ static bool crypt(aesni_cbc_fn_t fn, aesni_key_t *key,
 METHOD(crypter_t, encrypt, bool,
 	private_aesni_cbc_t *this, chunk_t data, chunk_t iv, chunk_t *encrypted)
 {
+	DBG1(DBG_CFG, "aesni encrypt");
 	return crypt(this->encrypt, this->ekey, data, iv, encrypted);
 }
 
 METHOD(crypter_t, decrypt, bool,
 	private_aesni_cbc_t *this, chunk_t data, chunk_t iv, chunk_t *decrypted)
 {
+	DBG1(DBG_CFG, "aesni decrypt");
 	return crypt(this->decrypt, this->dkey, data, iv, decrypted);
 }
 

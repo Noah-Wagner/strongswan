@@ -72,6 +72,7 @@ struct private_aesni_mac_t {
 METHOD(mac_t, get_mac, bool,
 	private_aesni_mac_t *this, chunk_t data, uint8_t *out)
 {
+	DBG1(DBG_CFG, "aesni xcbc mac get");
 	__m128i *ks, e, *bi;
 	u_int blocks, rem, i;
 

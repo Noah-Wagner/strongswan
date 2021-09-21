@@ -67,6 +67,7 @@ struct private_mac_t {
 METHOD(mac_t, get_mac, bool,
 	private_mac_t *this, chunk_t data, uint8_t *out)
 {
+	DBG1(DBG_CFG, "aesni getmc");
 	__m128i *ks, t, l, *bi;
 	u_int blocks, rem, i;
 
@@ -224,6 +225,7 @@ static void bit_shift(chunk_t chunk)
 METHOD(mac_t, set_key, bool,
 	private_mac_t *this, chunk_t key)
 {
+	DBG1(DBG_CFG, "aesni mac setkey");
 	__m128i rb, msb, l, a;
 	u_int round;
 	chunk_t k;

@@ -214,6 +214,7 @@ static __m128i assist256_2(__m128i a, __m128i b)
  */
 static void expand256(__m128i *key, __m128i *schedule)
 {
+	DBG1(DBG_CFG, "aesni key stuff");
 	__m128i t1, t2;
 
 	schedule[0] = t1 = _mm_loadu_si128(key);

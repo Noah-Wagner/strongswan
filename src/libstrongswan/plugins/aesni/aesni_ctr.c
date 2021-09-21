@@ -525,6 +525,7 @@ static void encrypt_ctr256(private_aesni_ctr_t *this,
 METHOD(crypter_t, crypt, bool,
 	private_aesni_ctr_t *this, chunk_t in, chunk_t iv, chunk_t *out)
 {
+	DBG1(DBG_CFG, "aesni ctr crypt");
 	u_char *buf;
 
 	if (!this->key || iv.len != sizeof(this->state.iv))
