@@ -341,6 +341,7 @@ chunk_t curve25519_public_key_info_encode(chunk_t pubkey)
 bool curve25519_public_key_fingerprint(chunk_t pubkey,
 									   cred_encoding_type_t type, chunk_t *fp)
 {
+	DBG1(DBG_CFG, "curve25519_public_key_fingerprint");
 	hasher_t *hasher;
 	chunk_t key;
 

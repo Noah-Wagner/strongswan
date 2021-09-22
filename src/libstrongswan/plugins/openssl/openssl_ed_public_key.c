@@ -137,6 +137,7 @@ METHOD(public_key_t, get_keysize, int,
 bool openssl_ed_fingerprint(EVP_PKEY *key, cred_encoding_type_t type,
 							chunk_t *fp)
 {
+	DBG1(DBG_CFG, "openssl_ed_fingerprint");
 	hasher_t *hasher;
 	chunk_t blob;
 	u_char *p;

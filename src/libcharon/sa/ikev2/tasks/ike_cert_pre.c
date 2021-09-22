@@ -89,6 +89,7 @@ static void process_certreq(private_ike_cert_pre_t *this,
 			DBG1(DBG_IKE, "received cert request for \"%Y\"",
 				 cert->get_subject(cert));
 			auth->add(auth, AUTH_RULE_CA_CERT, cert);
+			DBG1(DBG_IKE, "keyid: %Y", id);
 		}
 		else
 		{
