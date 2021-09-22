@@ -1140,8 +1140,13 @@ static private_key_t *get_private_by_cert(private_credential_manager_t *this,
 		if (public->get_fingerprint(public, KEYID_PUBKEY_SHA1, &chunk))
 		{
 			keyid = identification_create_from_encoding(ID_KEY_ID, chunk);
-			DBG1(DBG_CFG, "key fp: %Y", keyid);
+			DBG1(DBG_CFG, " key fp: %Y", keyid);
 			private = get_private_by_keyid(this, type, keyid);
+			if (private == NULL) {
+				DBG1(DBG_CFG, " private found");
+			} else {
+				DBG1(DBG_CFG, " private not found");
+			}
 			keyid->destroy(keyid);
 		}
 		public->destroy(public);
