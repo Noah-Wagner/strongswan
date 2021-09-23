@@ -200,7 +200,7 @@ METHOD(public_key_t, get_keysize, int,
  */
 bool openssl_ec_fingerprint(EC_KEY *ec, cred_encoding_type_t type, chunk_t *fp)
 {
-	DBG1(DBG_CFG, "openssl_ed_fingerprint");
+	DBG1(DBG_CFG, "openssl_ec_fingerprint");
 	hasher_t *hasher;
 	chunk_t key;
 	u_char *p;
