@@ -971,7 +971,6 @@ static bool has_privkey(certificate_t *cert)
 	chunk_t chunk;
 	bool found = FALSE;
 
-	DBG1(DBG_CFG, "has_privkey, %Y", cert->get_subject(cert));
 	public = cert->get_public_key(cert);
 	if (public)
 	{
@@ -979,7 +978,7 @@ static bool has_privkey(certificate_t *cert)
 		if (public->get_fingerprint(public, KEYID_PUBKEY_SHA1, &chunk))
 		{
 			keyid = identification_create_from_encoding(ID_KEY_ID, chunk);
-			DBG1(DBG_CFG, " has_privkey id: %Y", keyid);
+			DBG1(DBG_CFG, " has_privkey, dn: %Y -> id: %Y", cert->get_subject(cert), keyid);
 			private = lib->credmgr->get_private(lib->credmgr,
 								public->get_type(public), keyid, NULL);
 
