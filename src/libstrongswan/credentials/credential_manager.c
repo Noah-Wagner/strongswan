@@ -1142,10 +1142,10 @@ static private_key_t *get_private_by_cert(private_credential_manager_t *this,
 			keyid = identification_create_from_encoding(ID_KEY_ID, chunk);
 			DBG1(DBG_CFG, " key fp: %Y", keyid);
 			private = get_private_by_keyid(this, type, keyid);
-			if (private == NULL) {
-				DBG1(DBG_CFG, " private found");
+			if (private != NULL) {
+				DBG1(DBG_CFG, " get_private_by_cert found");
 			} else {
-				DBG1(DBG_CFG, " private not found");
+				DBG1(DBG_CFG, " get_private_by_cert not found");
 			}
 			keyid->destroy(keyid);
 		}

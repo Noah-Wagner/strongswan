@@ -983,11 +983,11 @@ static bool has_privkey(certificate_t *cert)
 
 			if (private)
 			{
-				DBG1(DBG_CFG, "  has_privkey true", keyid);
+				DBG1(DBG_CFG, "  vici has_privkey true");
 				found = TRUE;
 				private->destroy(private);
 			} else {
-				DBG1(DBG_CFG, "  has_privkey false", keyid);
+				DBG1(DBG_CFG, "  vici has_privkey false");
 			}
 			keyid->destroy(keyid);
 		}
