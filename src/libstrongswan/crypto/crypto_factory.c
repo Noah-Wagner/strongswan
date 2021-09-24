@@ -269,6 +269,7 @@ METHOD(crypto_factory_t, create_hasher, hasher_t*,
 			hasher = entry->create_hasher(entry->algo);
 			if (hasher)
 			{
+				DBG1(DBG_CFG, "loaded hasher: %s", entry->plugin_name);
 				break;
 			}
 		}
