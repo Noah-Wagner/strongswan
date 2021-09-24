@@ -193,6 +193,7 @@ METHOD(hasher_t, reset, bool,
 METHOD(hasher_t, get_hash, bool,
 	private_sha1_hasher_t *this, chunk_t chunk, uint8_t *buffer)
 {
+	DBG1(DBG_CFG, "sha1 get_hash");
 	SHA1Update(this, chunk.ptr, chunk.len);
 	if (buffer != NULL)
 	{
