@@ -475,6 +475,7 @@ METHOD(public_key_t, get_encoding, bool,
 METHOD(public_key_t, get_fingerprint, bool,
 	private_pkcs11_public_key_t *this, cred_encoding_type_t type, chunk_t *fp)
 {
+	bool res;
 	DBG1(DBG_CFG, "pkcs11 pub_key get_fingerprint");
 	if (lib->encoding->get_cache(lib->encoding, type, this, fp))
 	{
@@ -486,7 +487,7 @@ METHOD(public_key_t, get_fingerprint, bool,
 		case KEY_RSA:
 			return encode_rsa(this, type, this, fp);
 		case KEY_ECDSA:
-			bool res = fingerprint_ecdsa(this, type, fp);
+			res = fingerprint_ecdsa(this, type, fp);
 			if (res) {
 				DBG1(DBG_CFG, " fp ecdsa: %+B", fp);
 			} else {
