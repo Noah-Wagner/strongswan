@@ -478,6 +478,7 @@ METHOD(public_key_t, get_fingerprint, bool,
 	DBG1(DBG_CFG, "pkcs11 pub_key get_fingerprint");
 	if (lib->encoding->get_cache(lib->encoding, type, this, fp))
 	{
+		DBG1(DBG_CFG, " fp cached: %+B", fp);
 		return TRUE;
 	}
 	switch (this->type)
@@ -485,7 +486,13 @@ METHOD(public_key_t, get_fingerprint, bool,
 		case KEY_RSA:
 			return encode_rsa(this, type, this, fp);
 		case KEY_ECDSA:
-			return fingerprint_ecdsa(this, type, fp);
+			bool res = fingerprint_ecdsa(this, type, fp);
+			if (res) {
+				DBG1(DBG_CFG, " fp ecdsa: %+B", fp);
+			} else {
+				DBG1(DBG_CFG, " fp ecdsa failure");
+			}
+			return res;
 		default:
 			return FALSE;
 	}

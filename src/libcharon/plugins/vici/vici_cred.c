@@ -379,6 +379,8 @@ CALLBACK(load_token, vici_message_t*,
 		snprintf(buf, sizeof(buf), "%+B", &fp);
 		builder->add_kv(builder, "id", "%s", buf);
 		unique = buf;
+
+		DBG1(DBG_CFG, " private key fp: %s", buf);
 	}
 	if (shared && unique)
 	{	/* use the handle as owner, but the key identifier as unique ID */
