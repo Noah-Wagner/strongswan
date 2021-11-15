@@ -374,6 +374,7 @@ CALLBACK(load_token, vici_message_t*,
 	}
 	builder = vici_builder_create();
 	builder->add_kv(builder, "success", "yes");
+	DBG1(DBG_CFG, "vici_cred, getting fingerprint of new key");
 	if (key->get_fingerprint(key, KEYID_PUBKEY_SHA1, &fp))
 	{
 		snprintf(buf, sizeof(buf), "%+B", &fp);

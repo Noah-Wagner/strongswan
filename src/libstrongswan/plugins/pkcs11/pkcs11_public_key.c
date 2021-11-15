@@ -407,6 +407,9 @@ static bool fingerprint_ecdsa(private_pkcs11_public_key_t *this,
 		default:
 			return FALSE;
 	}
+
+	DBG1(DBG_CFG, "  fingerprint_ecdsa: %B", &asn1);
+
 	hasher = lib->crypto->create_hasher(lib->crypto, HASH_SHA1);
 	if (!hasher || !hasher->allocate_hash(hasher, asn1, fp))
 	{
@@ -414,6 +417,9 @@ static bool fingerprint_ecdsa(private_pkcs11_public_key_t *this,
 		chunk_clear(&asn1);
 		return FALSE;
 	}
+
+	DBG1(DBG_CFG, "  Hashed SHA1: %B", fp);
+
 	hasher->destroy(hasher);
 	chunk_clear(&asn1);
 	lib->encoding->cache(lib->encoding, type, this, *fp);
